@@ -19,6 +19,152 @@ import java.util.Stack;
  * Created by JHe on 12/23/2016.
  */
 public class Solution {
+
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        invertTree(root.left);
+        invertTree(root.right);
+        TreeNode temp = root.right;
+        root.right = root.left;
+        root.left = temp;
+        return root;
+    }
+
+    public boolean isHappy(int n) {
+        HashSet<Integer> sumSet = new HashSet<>();
+        int x = n;
+        while (true) {
+            x = getSquarSum(x);
+            if (x == 1) {
+                return true;
+            } else {
+                if (sumSet.contains(x)) {
+                    return false;
+                } else {
+                    sumSet.add(x);
+                }
+            }
+        }
+    }
+
+    private int getSquarSum(int n) {
+        int sum = 0;
+        while (n > 0) {
+            int s = n % 10;
+            sum += s * s;
+            n = n / 10;
+        }
+        return sum;
+    }
+
+    public int addDigits(int num) {
+        if(num == 0) {
+            return 0;
+        }
+        return num - 9 * ((num - 1) / 9);
+    }
+
+    public boolean detectCapitalUse(String word) {
+        if (word == null || word.length() == 0) {
+            return true;
+        }
+        if (word.toUpperCase().equals(word) || word.toLowerCase().equals(word)) {
+            return true;
+        } else {
+            if (word.toUpperCase().substring(0, 1).equals(word.substring(0, 1))
+                    && word.toLowerCase().substring(1, word.length()).equals(word.substring(1, word.length()))) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public int findMaxConsecutiveOnes(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int max = 0;
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 1) {
+                count++;
+            } else {
+                max = Math.max(max, count);
+                count = 0;
+            }
+        }
+        max = Math.max(max, count);
+        return max;
+    }
+
+    public int[] nextGreaterElement(int[] findNums, int[] nums) {
+        if(findNums.length == 0) {
+            return new int[0];
+        }
+        int[] result = new int[findNums.length];
+        for (int i = 0; i < findNums.length; i++) {
+            int j = 0;
+            while(nums[j] != findNums[i]) {
+                j++;
+            }
+            j++;
+            while(j < nums.length && nums[j] < findNums[i]) {
+                j++;
+            }
+            if (j < nums.length) {
+                result[i] = nums[j];
+            } else {
+                result[i] = -1;
+            }
+        }
+        return result;
+    }
+
+    public int missingNumber(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        boolean flip0 = false;
+        for (int i = 0; i < nums.length; i++) {
+            if (Math.abs(nums[i]) < nums.length) {
+                nums[Math.abs(nums[i])] *= -1;
+                if (nums[Math.abs(nums[i])] == 0) {
+                    flip0 = true;
+                }
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                return i;
+            }
+            if (nums[i] == 0 && !flip0) {
+                return i;
+            }
+        }
+        return nums.length;
+    }
+
+    public int findComplement(int num) {
+        if (num == 0) {
+            return 1;
+        }
+        int mask = 0;
+        int numCopy = num;
+        while (num > 0) {
+            num = num >> 1;
+            mask = mask << 1;
+            mask = mask | 1;
+        }
+        return numCopy ^ mask;
+    }
+
+
+
+
+
     public Set<Movie> getMovieRecommendations (Movie movie, int N)
     {
         // WRITE YOUR CODE HERE
