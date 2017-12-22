@@ -20,6 +20,724 @@ import java.util.Stack;
  */
 public class Solution {
 
+    public int countPrimes(int n) {
+        if (n <= 2) {
+            return 0;
+        }
+        List<Integer> primes = new ArrayList<>();
+        primes.add(2);
+        for (int i = 3; i < n; i++){
+            if (isPrime(i, primes)) {
+                primes.add(i);
+            }
+        }
+        return primes.size();
+    }
+
+    public boolean isPrime(int n, List<Integer> primes) {
+        for (Integer prime : primes) {
+            if (prime * prime > n) {
+                break;
+            }
+            if (n % prime == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isUgly(int num) {
+        if (num == 0) {
+            return false;
+        }
+
+        while (num % 2 == 0) {
+            num = num / 2;
+        }
+        while (num % 3 == 0) {
+            num = num / 3;
+        }
+        while (num % 5 == 0) {
+            num = num / 5;
+        }
+        return num == 1;
+    }
+
+    public String[] findWords(String[] words) {
+        if (words == null || words.length == 0) {
+            return null;
+        }
+        List<String> result = new ArrayList<>();
+        for (String word : words) {
+            if (sameLine(word)) {
+                result.add(word);
+            }
+        }
+        String[] resultArr = new String[result.size()];
+        resultArr = result.toArray(resultArr);
+        return resultArr;
+    }
+
+    public boolean sameLine(String word) {
+        if (word == null || word.length() == 0) {
+            return true;
+        }
+        Character[] row1Chars = new Character[] {'q', 'Q', 'w', 'W', 'e', 'E', 'r', 'R', 't', 'T',
+                'y', 'Y', 'u', 'U', 'i', 'I', 'o', 'O', 'p', 'P'};
+        Character[] row2Chars = new Character[] {'a', 'A', 's', 'S', 'd', 'D', 'f', 'F', 'g', 'G',
+                'h', 'H', 'j', 'J', 'k', 'K', 'l', 'L'};
+        Character[] row3Chars = new Character[] {'z', 'Z', 'x', 'X', 'c', 'C', 'v', 'V', 'b', 'B',
+                'n', 'N', 'm', 'M'};
+        HashSet<Character> row1 = new HashSet<>(Arrays.asList(row1Chars));
+        HashSet<Character> row2 = new HashSet<>(Arrays.asList(row2Chars));
+        HashSet<Character> row3 = new HashSet<>(Arrays.asList(row3Chars));
+        char[] wordChars = word.toCharArray();
+        if (row1.contains(wordChars[0])) {
+            for (int i = 1; i < wordChars.length; i++) {
+                if (!row1.contains(wordChars[i])) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (row2.contains(wordChars[0])) {
+            for (int i = 1; i < wordChars.length; i++) {
+                if (!row2.contains(wordChars[i])) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (row3.contains(wordChars[0])) {
+            for (int i = 1; i < wordChars.length; i++) {
+                if (!row3.contains(wordChars[i])) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //// TODO: 3/4/2017
+    public boolean is1Balanced(TreeNode root) {
+        return false;
+    }
+
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null) {
+            return minDepth(root.right) + 1;
+        }
+        if (root.right == null) {
+            return minDepth(root.left) + 1;
+        }
+        return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+    }
+
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return 1;
+        }
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+
+    public int hammingWeight(int n) {
+        int result = 0;
+        while (n != 0) {
+            result += n & 1;
+            n = n >> 1;
+        }
+        return result;
+    }
+
+    public int getSum(int a, int b) {
+        if (a == 0) {
+            return b;
+        }
+        if (b == 0) {
+            return a;
+        }
+        while (b != 0) {
+            int carry = a & b;
+            a = a ^ b;
+            b = carry << 1;
+        }
+        return a;
+    }
+
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        if (nums == null || nums.length <= 1) {
+            return result;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            int index = Math.abs(nums[i]) - 1;
+            if (nums[index] < 0) {
+                result.add(index + 1);
+            } else {
+                nums[index] *= -1;
+            }
+        }
+        return result;
+    }
+
+    public int singleNumber(int[] nums) {
+        if (nums.length < 1) {
+            return 0;
+        }
+        int result = 0;
+        for (int i = 0; i < nums.length; i++) {
+            result = result ^ nums[i];
+        }
+        return result;
+    }
+
+    public int islandPerimeter(int[][] grid) {
+        if (grid.length < 1) {
+            return 0;
+        }
+        int result = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == 1) {
+                    if (i == 0) {
+                        result++;
+                    } else {
+                        if (grid[i - 1][j] == 0) {
+                            result ++;
+                        }
+                    }
+                    if (j == 0) {
+                        result++;
+                    } else {
+                        if (grid[i][j - 1] == 0) {
+                            result++;
+                        }
+                    }
+                    if (i == grid.length - 1) {
+                        result++;
+                    } else {
+                        if (grid[i + 1][j] == 0) {
+                            result++;
+                        }
+                    }
+                    if (j == grid[i].length - 1) {
+                        result++;
+                    } else {
+                        if (grid[i][j + 1] == 0) {
+                            result++;
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public boolean canWinNim(int n) {
+        if (n % 4 == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public String reverseVowels(String s) {
+        if (s == null || s.length() <= 1) {
+            return s;
+        }
+        char[] schar = s.toCharArray();
+        int i = 0;
+        int j = schar.length - 1;
+        while(i < j) {
+            while (!isVowel(schar[i]) && i < j) {
+                i++;
+            }
+            while (!isVowel(schar[j]) && j > i) {
+                j--;
+            }
+            if (isVowel(schar[i]) && isVowel(schar[j])) {
+                char temp = schar[i];
+                schar[i] = schar[j];
+                schar[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        return new String(schar);
+    }
+
+    private boolean isVowel(char c) {
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'
+                || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String reverseString(String s) {
+        if(s == null || s.length() <= 1) {
+            return s;
+        }
+        char[] schar = s.toCharArray();
+        int i = 0;
+        int j = schar.length - 1;
+        while (i < j) {
+            char temp = schar[i];
+            schar[i] = schar[j];
+            schar[j] = temp;
+            i++;
+            j--;
+        }
+        String result = new String(schar);
+        return result;
+    }
+
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            int x = Math.abs(nums[i]) - 1;
+            nums[x] = -1 * Math.abs(nums[x]);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                result.add(i + 1);
+            }
+        }
+        return result;
+    }
+
+    public List<String> fizzBuzz(int n) {
+        List<String> result = new ArrayList<>();
+        if (n <= 0) {
+            return result;
+        }
+        for (int i = 1; i <= n; i++) {
+            String num = "";
+            if (i % 3 == 0) {
+                num += "Fizz";
+            }
+            if (i % 5 == 0) {
+                num += "Buzz";
+            }
+            if (num.length() == 0) {
+                num = String.valueOf(i);
+            }
+            result.add(num);
+        }
+        return result;
+    }
+
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode tail = reverse(slow);
+        while (tail != null) {
+            if (tail.val == head.val) {
+                tail = tail.next;
+                head = head.next;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private ListNode reverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode prev = head;
+        ListNode next = head.next;
+        prev.next = null;
+        while (next != null) {
+            ListNode temp = next.next;
+            next.next = prev;
+            prev = next;
+            next = temp;
+        }
+        return prev;
+    }
+
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode prev = head;
+        ListNode next = head.next;
+        prev.next = null;
+        while (next != null) {
+            ListNode temp = next.next;
+            next.next = prev;
+            prev = next;
+            next = temp;
+        }
+        return prev;
+    }
+
+    public boolean isPalindrome(String s) {
+        if (s == null) {
+            return false;
+        }
+        if (s.isEmpty()) {
+            return true;
+        }
+        int i = 0;
+        int j = s.length() - 1;
+        while(i < j) {
+            while (i < s.length() && !(Character.isAlphabetic(s.charAt(i)) || Character.isDigit(s.charAt(i)))) {
+                i++;
+            }
+            while(j >= 0 && !(Character.isAlphabetic(s.charAt(j)) || Character.isDigit(s.charAt(j)))) {
+                j--;
+            }
+            if (i > j) {
+                return true;
+            }
+            if (Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(j))) {
+                i++;
+                j--;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null || n <= 0) {
+            return head;
+        }
+        ListNode first = head;
+        ListNode second = head;
+        ListNode prev = second;
+        while (first != null && n > 0) {
+            first = first.next;
+            n--;
+        }
+        while (first != null) {
+            prev = second;
+            first = first.next;
+            second = second.next;
+        }
+        if (prev.equals(second)) {
+            return prev.next;
+        } else {
+            prev.next = second.next;
+            return head;
+        }
+    }
+
+    public boolean isValid(String s) {
+        if (s == null) {
+            return false;
+        }
+        Stack<Character> stack = new Stack<>();
+        Character top;
+        for (int i = 0; i < s.length(); i++) {
+            switch (s.charAt(i)) {
+                case '(':
+                    stack.push('(');
+                    break;
+                case ')':
+                    if (stack.isEmpty()) {
+                        return false;
+                    }
+                    top = stack.pop();
+                    if (top.charValue() != '(') {
+                        return false;
+                    }
+                    break;
+                case '[':
+                    stack.push('[');
+                    break;
+                case ']':
+                    if (stack.isEmpty()) {
+                        return false;
+                    }
+                    top = stack.pop();
+                    if (top.charValue() != '[') {
+                        return false;
+                    }
+                    break;
+                case '{':
+                    stack.push('{');
+                    break;
+                case '}':
+                    if (stack.isEmpty()) {
+                        return false;
+                    }
+                    top = stack.pop();
+                    if (top.charValue() != '{') {
+                        return false;
+                    }
+                    break;
+                default:
+                    return false;
+            }
+        }
+        if (stack.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int strStr(String haystack, String needle) {
+        int result = -1;
+        if (haystack == null) {
+            return result;
+        }
+        result = haystack.indexOf(needle);
+        return result;
+    }
+
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode first = head;
+        ListNode second = head.next;
+        //first.next = null;
+        ListNode prev = null;
+        ListNode result = second;
+        while (second != null) {
+            ListNode temp = second.next;
+            second.next = first;
+            first.next = temp;
+            if (prev != null) {
+                prev.next = second;
+            }
+            prev = first;
+            first = temp;
+            if (first == null) {
+                break;
+            }
+            second = first.next;
+        }
+        return result;
+    }
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+        ListNode head = new ListNode(0);
+        ListNode first = head;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                first.next = l1;
+                first = first.next;
+                l1 = l1.next;
+            } else {
+                first.next = l2;
+                first = first.next;
+                l2 = l2.next;
+            }
+        }
+        while (l1 != null) {
+            first.next = l1;
+            first = first.next;
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            first.next = l2;
+            first = first.next;
+            l2 = l2.next;
+        }
+        ListNode result = head.next;
+        head.next = null;
+        return result;
+    }
+
+    public int removeDuplicates(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int i = 0;
+        for (int j = 1; j < nums.length; j++) {
+            if (nums[j] == nums[i]) {
+                continue;
+            } else {
+                nums[i + 1] = nums[j];
+                i++;
+            }
+        }
+        return i + 1;
+    }
+
+    public int romanToInt(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int value = 0;
+        for (int i = 0; i < s.length(); i++) {
+            switch (s.charAt(i)) {
+                case 'I':
+                    if (i + 1 < s.length()) {
+                        char next = s.charAt(i + 1);
+                        if (next == 'X' || next == 'V') {
+                            value += -1;
+                        } else {
+                            value += 1;
+                        }
+                    } else {
+                        value += 1;
+                    }
+                    break;
+                case 'V':
+                    value += 5;
+                    break;
+                case 'X':
+                    if (i + 1 < s.length()) {
+                        char next = s.charAt(i + 1);
+                        if (next == 'L' || next == 'C') {
+                            value += -10;
+                        } else {
+                            value += 10;
+                        }
+                    } else {
+                        value += 10;
+                    }
+                    break;
+                case 'L':
+                    value += 50;
+                    break;
+                case 'C':
+                    if (i + 1 < s.length()) {
+                        char next = s.charAt(i + 1);
+                        if (next == 'D' || next == 'M') {
+                            value += -100;
+                        } else {
+                            value += 100;
+                        }
+                    } else {
+                        value += 100;
+                    }
+                    break;
+                case 'D':
+                    value += 500;
+                    break;
+                case 'M':
+                    value += 1000;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return value;
+    }
+
+    public boolean isPalindrome(int x) {
+        if (x == 0) {
+            return true;
+        }
+        if (x < 0 || x % 10 == 0) {
+            return false;
+        } else if (x < 10) {
+            return true;
+        }
+        int y = 0;
+        while (x >= y) {
+            if (y == x || (y > 0 && y == x / 10)) {
+                return true;
+            } else {
+                int last = x % 10;
+                y = y * 10 + last;
+                x = x / 10;
+            }
+        }
+        return false;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if (l1 == null && l2 == null) {
+            return null;
+        } else if (l1 == null) {
+            return l2;
+        } else if (l2 == null) {
+            return l1;
+        }
+        int flag = 0;
+        ListNode head = new ListNode(0);
+        ListNode result = head;
+        while (l1 != null && l2 != null) {
+            ListNode add;
+            if (l1.val + l2.val + flag >= 10) {
+                add = new ListNode(l1.val + l2.val + flag - 10);
+                flag = 1;
+            } else {
+                add = new ListNode(l1.val + l2.val + flag);
+                flag = 0;
+
+            }
+            result.next = add;
+            result = result.next;
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        if (l1 == null && l2 == null) {
+            if (flag == 1) {
+                result.next = new ListNode(1);
+            }
+            return head.next;
+        }
+        if (l1 == null) {
+            while (l2 != null) {
+                ListNode add;
+                if (l2.val + flag >= 10) {
+                    add = new ListNode(l2.val + flag - 10);
+                    flag = 1;
+                } else {
+                    add = new ListNode(l2.val + flag);
+                    flag = 0;
+
+                }
+                result.next = add;
+                result = result.next;
+                l2 = l2.next;
+            }
+
+        }
+        if (l2 == null) {
+            while (l1 != null) {
+                ListNode add;
+                if (l1.val + flag >= 10) {
+                    add = new ListNode(l1.val + flag - 10);
+                    flag = 1;
+                } else {
+                    add = new ListNode(l1.val + flag);
+                    flag = 0;
+
+                }
+                result.next = add;
+                result = result.next;
+                l1 = l1.next;
+            }
+        }
+        if (flag == 1) {
+            result.next = new ListNode(1);
+        }
+        return head.next;
+    }
+
     public TreeNode invertTree(TreeNode root) {
         if (root == null) {
             return null;
@@ -745,7 +1463,7 @@ public class Solution {
         return result;
     }
 
-    public int countPrimes(int n) {
+    public int countPrimes2(int n) {
         if (n <= 2) {
             return 0;
         }
