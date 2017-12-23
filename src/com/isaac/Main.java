@@ -7,7 +7,14 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+
+
+        SolutionNormal sn = new SolutionNormal();
+        sn.coinChange(new int[]{2}, 3);
+
+        SolutionEasy se = new SolutionEasy();
+        se.selfDividingNumbers(19, 20);
+
         Solution s = new Solution();
 
         Movie movie1 = new Movie(1, (float)1.2);

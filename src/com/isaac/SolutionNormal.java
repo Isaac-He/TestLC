@@ -1,13 +1,31 @@
 package com.isaac;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SolutionNormal {
 
-    public List<Integer> selfDividingNumbers(int left, int right) {
-        List<Integer> result = new ArrayList<>();
-        return result;
+    //322. Coin Change
+    public int coinChange(int[] coins, int amount) {
+        if (coins.length == 0){
+            return -1;
+        }
+        if (amount <= 0) {
+            return 0;
+        }
+        Arrays.sort(coins);
+        int[] result = new int[amount + 1];
+        Arrays.fill(result, Integer.MAX_VALUE - 1);
+        result[0] = 0;
+        for (int i = 1; i < result.length; i++) {
+            for (int j = 0; j < coins.length; j++) {
+                if (coins[j] <= i) {
+                    result[i] = Math.min(result[i], result[i - coins[j]] + 1);
+                }
+            }
+        }
+        return result[amount] > amount ? -1 : result[amount];
     }
 
     public List<List<Integer>> subsets(int[] nums) {
