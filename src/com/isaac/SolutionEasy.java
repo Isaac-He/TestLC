@@ -4,6 +4,53 @@ import java.util.*;
 
 public class SolutionEasy {
 
+    // 235. Lowest Common Ancestor of a Binary Search Tree
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        return null;
+    }
+
+    // 617. Merge Two Binary Trees
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (t2 == null) {
+            return t1;
+        }
+        if (t1 == null) {
+            return t2;
+        }
+        TreeNode newNode = new TreeNode(t1.val + t2.val);
+        newNode.left = mergeTrees(t1.left, t2.left);
+        newNode.right = mergeTrees(t1.right, t2.right);
+        return newNode;
+    }
+
+    // 657. Judge Route Circle
+    public boolean judgeCircle(String moves) {
+        if (moves == null || moves.isEmpty()) {
+            return true;
+        }
+        int x = 0;
+        int y = 0;
+        for (char m : moves.toCharArray()) {
+            switch (m) {
+                case 'U':
+                    y++;
+                    break;
+                case 'D':
+                    y--;
+                    break;
+                case 'R':
+                    x++;
+                    break;
+                case 'L':
+                    x--;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return x == 0 && y == 0;
+    }
+
     //507. Perfect Number
     public boolean checkPerfectNumber(int num) {
         if (num <= 1) {
