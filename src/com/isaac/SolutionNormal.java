@@ -7,6 +7,33 @@ import java.util.Stack;
 
 public class SolutionNormal {
 
+    // 287. Find the Duplicate Number
+    public int findDuplicate(int[] nums) {
+        //easy approach.
+        /*Arrays.sort(nums);
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == nums[i - 1]) {
+                return nums[i];
+            }
+        }
+        return -1;*/
+
+        //fast approach.
+        int first = nums[0];
+        int second = nums[0];
+        do {
+            first = nums[first];
+            second = nums[nums[second]];
+        } while (first != second);
+
+        second = nums[0];
+        while (first != second) {
+            first = nums[first];
+            second = nums[second];
+        }
+        return first;
+    }
+
     // 654. Maximum Binary Tree
     public TreeNode constructMaximumBinaryTree(int[] nums) {
         if (nums.length == 0) {

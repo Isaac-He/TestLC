@@ -7,6 +7,64 @@ import java.util.Stack;
 
 public class SolutionEasy {
 
+    // 121. Best Time to Buy and Sell Stock
+    public int maxProfit(int[] prices) {
+        if (prices.length < 2) {
+            return 0;
+        }
+        int min = Integer.MAX_VALUE;
+        int max = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < min) {
+                min = prices[i];
+            } else if (prices[i] - min > max) {
+                max = prices[i] - min;
+            }
+        }
+        return max;
+    }
+
+    // 53. Maximum Subarray
+    public int maxSubArray(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int sum = 0;
+        int max = Integer.MIN_VALUE;
+        int i = 0;
+        while (i < nums.length) {
+            if (nums[i] + sum < 0) {
+                sum = 0;
+                max = Math.max(max, nums[i]);
+            } else {
+                sum += nums[i];
+                max = Math.max(sum, max);
+            }
+            i++;
+        }
+        return max;
+    }
+
+    // 717. 1-bit and 2-bit Characters
+    public boolean isOneBitCharacter(int[] bits) {
+        int i = 0;
+        while (i < bits.length - 1) {
+            if (bits[i] == 1) {
+                i += 2;
+            } else {
+                i++;
+            }
+        }
+        if (i == bits.length) {
+            return false;
+        }
+        if (bits[i] == 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     // 645. Set Mismatch
     public int[] findErrorNums(int[] nums) {
         int[] flag = new int[nums.length + 1];
