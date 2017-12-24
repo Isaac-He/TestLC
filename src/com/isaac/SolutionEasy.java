@@ -1,8 +1,30 @@
 package com.isaac;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
 
 public class SolutionEasy {
+
+    // 645. Set Mismatch
+    public int[] findErrorNums(int[] nums) {
+        int[] flag = new int[nums.length + 1];
+        Arrays.fill(flag, 0);
+        int[] result = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            flag[nums[i]]++;
+        }
+        for (int i = 1; i < flag.length; i++) {
+            if (flag[i] > 1) {
+                result[0] = i;
+            }
+            if (flag[i] < 1) {
+                result[1] = i;
+            }
+        }
+        return result;
+    }
 
     // 404. Sum of Left Leaves
     public int sumOfLeftLeaves(TreeNode root) {
