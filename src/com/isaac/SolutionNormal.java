@@ -6,6 +6,22 @@ import java.util.List;
 
 public class SolutionNormal {
 
+    // 236. Lowest Common Ancestor of a Binary Tree
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || p == root || q == root) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) {
+            return root;
+        } else if (left != null) {
+            return left;
+        } else {
+            return right;
+        }
+    }
+
     //322. Coin Change
     public int coinChange(int[] coins, int amount) {
         if (coins.length == 0){

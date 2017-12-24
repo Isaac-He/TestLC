@@ -6,6 +6,20 @@ public class SolutionEasy {
 
     // 235. Lowest Common Ancestor of a Binary Search Tree
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || p == null || q == null) {
+            return null;
+        }
+        if ((root.val - p.val) * (root.val - q.val) < 0) {
+            return root;
+        } else if ((root.val - p.val) * (root.val - q.val) == 0) {
+            return root;
+        } else if ((root.val - p.val) * (root.val - q.val) > 0) {
+            if (root.val - p.val > 0) {
+                return lowestCommonAncestor(root.left, p, q);
+            } else {
+                return lowestCommonAncestor(root.right, p, q);
+            }
+        }
         return null;
     }
 
