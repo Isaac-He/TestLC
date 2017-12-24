@@ -4,6 +4,29 @@ import java.util.*;
 
 public class SolutionEasy {
 
+    // 404. Sum of Left Leaves
+    public int sumOfLeftLeaves(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int sum = 0;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.empty()) {
+            TreeNode node = stack.pop();
+            if (node.left != null) {
+                if (node.left.left == null && node.left.right == null) {
+                    sum += node.left.val;
+                }
+                stack.push(node.left);
+            }
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+        }
+        return sum;
+    }
+
     // 235. Lowest Common Ancestor of a Binary Search Tree
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null || p == null || q == null) {
