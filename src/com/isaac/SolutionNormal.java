@@ -3,8 +3,64 @@ package com.isaac;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 public class SolutionNormal {
+
+    // 654. Maximum Binary Tree
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+        if (nums.length == 0) {
+            return null;
+        }
+        if (nums.length == 1) {
+            return new TreeNode(nums[0]);
+        }
+        int index = getMaxIndex(nums);
+        TreeNode root = new TreeNode(nums[index]);
+        int[] left = Arrays.copyOf(nums, index);
+        int[] right = Arrays.copyOfRange(nums, index + 1, nums.length);
+        root.left = constructMaximumBinaryTree(left);
+        root.right = constructMaximumBinaryTree(right);
+        return root;
+    }
+
+    private int getMaxIndex(int[] nums) {
+        int index = -1;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > max) {
+                max = nums[i];
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    // 513. Find Bottom Left Tree Value
+    public int findBottomLeftValue(TreeNode root) {
+        if (root == null) {
+            return -1;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        List<TreeNode> list = new ArrayList<>();
+        stack.push(root);
+        while (!stack.empty()) {
+            list.clear();
+            while (!stack.empty()) {
+                list.add(stack.pop());
+            }
+            for (int i = list.size() - 1; i >= 0; i--) {
+                TreeNode node = list.get(i);
+                if (node.right != null) {
+                    stack.push(node.right);
+                }
+                if (node.left != null) {
+                    stack.push(node.left);
+                }
+            }
+        }
+        return list.get(0).val;
+    }
 
     // 236. Lowest Common Ancestor of a Binary Tree
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {

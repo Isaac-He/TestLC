@@ -10,6 +10,7 @@ public class Main {
 
 
         SolutionNormal sn = new SolutionNormal();
+        sn.constructMaximumBinaryTree(new int[] {3,2,1,6,0,5});
         sn.coinChange(new int[]{2}, 3);
 
         SolutionEasy se = new SolutionEasy();
