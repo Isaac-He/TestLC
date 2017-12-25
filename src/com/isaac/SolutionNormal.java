@@ -7,6 +7,11 @@ import java.util.Stack;
 
 public class SolutionNormal {
 
+    // 462. Minimum Moves to Equal Array Elements II
+    public int minMoves2(int[] nums) {
+        return 0;
+    }
+
     // 287. Find the Duplicate Number
     public int findDuplicate(int[] nums) {
         //easy approach.

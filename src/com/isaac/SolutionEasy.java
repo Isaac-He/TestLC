@@ -7,8 +7,46 @@ import java.util.Stack;
 
 public class SolutionEasy {
 
-    // 121. Best Time to Buy and Sell Stock
+    // 453. Minimum Moves to Equal Array Elements
+    public int minMoves(int[] nums) {
+        if (nums.length < 2) {
+            return 0;
+        }
+        int min = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] < min) {
+                min = nums[i];
+            }
+        }
+        int moves = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > min) {
+                moves += nums[i] - min;
+            }
+        }
+        return moves;
+    }
+
+    // 122. Best Time to Buy and Sell Stock II
     public int maxProfit(int[] prices) {
+        if (prices.length < 2) {
+            return 0;
+        }
+        int max = 0;
+        int current = prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] < current) {
+                current = prices[i];
+            } else if (prices[i] > current) {
+                max += prices[i] - current;
+                current = prices[i];
+            }
+        }
+        return max;
+    }
+
+    // 121. Best Time to Buy and Sell Stock
+    public int maxProfit1(int[] prices) {
         if (prices.length < 2) {
             return 0;
         }
