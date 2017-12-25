@@ -9,7 +9,21 @@ public class SolutionNormal {
 
     // 462. Minimum Moves to Equal Array Elements II
     public int minMoves2(int[] nums) {
-        return 0;
+        if (nums.length < 2) {
+            return 0;
+        }
+        Arrays.sort(nums);
+        int mid = nums.length / 2;
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i < mid) {
+                sum += nums[mid] - nums[i];
+            } else {
+                sum += nums[i] - nums[mid];
+            }
+        }
+
+        return sum;
     }
 
     // 287. Find the Duplicate Number
