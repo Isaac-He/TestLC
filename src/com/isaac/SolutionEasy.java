@@ -7,6 +7,77 @@ import java.util.Stack;
 
 public class SolutionEasy {
 
+    // 606. Construct String from Binary Tree
+    public String tree2str(TreeNode t) {
+        String result = "";
+        if (t == null) {
+            return result;
+        }
+        result = t.val + "";//String.valueOf(t.val);
+        if (t.left != null) {
+            if (t.right != null) {
+                result = result + "(" + tree2str(t.left) + ")(" + tree2str(t.right) + ")";
+                //result = String.format(result + "(%s)(%s)", tree2str(t.left), tree2str(t.right));
+            } else {
+                result = result + "(" + tree2str(t.left) + ")";
+                //result = String.format(result + "(%s)", tree2str(t.left));
+            }
+        } else {
+            if (t.right != null) {
+                result = result + "()(" + tree2str(t.right) + ")";
+                //result = String.format(result + "()(%s)", tree2str(t.right));
+            }
+        }
+        return result;
+    }
+
+    // 66. Plus One
+    public int[] plusOne(int[] digits) {
+        boolean flag = false;
+        for (int i = digits.length - 1; i >= 0; i--) {
+            digits[i]++;
+            if (digits[i] >= 10) {
+                flag = true;
+                digits[i] -= 10;
+            } else {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            int[] result = new int[digits.length + 1];
+            result[0] = 1;
+            System.arraycopy(digits, 0, result, 1, digits.length);
+            return result;
+        }
+        return digits;
+    }
+
+    // 58. Length of Last Word
+    public int lengthOfLastWord(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        char[] sChar = s.toCharArray();
+        int len = 0;
+        boolean start = false;
+        for (int i = sChar.length - 1; i >= 0; i--) {
+            if (!start) {
+                if (sChar[i] != ' ') {
+                    start = true;
+                }
+            }
+            if (start) {
+                if (sChar[i] != ' ') {
+                    len++;
+                } else {
+                    break;
+                }
+            }
+        }
+        return len;
+    }
+
     // 453. Minimum Moves to Equal Array Elements
     public int minMoves(int[] nums) {
         if (nums.length < 2) {
