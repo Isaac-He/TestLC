@@ -7,6 +7,96 @@ import java.util.Stack;
 
 public class SolutionEasy {
 
+
+    // 70. Climbing Stairs
+    public int climbStairs(int n) {
+        if (n < 0) {
+            return 0;
+        }
+        int[] result = new int[n + 1];
+        result[0] = 1;
+        result[1] = 1;
+        for (int i = 2; i < n + 1; i++) {
+            result[i] = result[i - 1] + result[i - 2];
+        }
+        return result[n];
+    }
+
+    // 69. Sqrt(x)
+    public int mySqrt(int x) {
+        if (x <= 0) {
+            return 0;
+        }
+        int i = 0;
+        int j = x;
+        int k = Math.max(i + (j - i ) / 2, 1);
+        while (true) {
+            if (k <= x / k && (k + 1) > x / (k + 1)) {
+                return k;
+            } else if (k > x / k) {
+                j = k;
+                k = Math.max(i + (j - i ) / 2, 1);
+            } else {
+                i = k;
+                k = Math.max(i + (j - i ) / 2, 1);
+            }
+        }
+    }
+
+    // 67. Add Binary
+    public String addBinary(String a, String b) {
+        if (a == null || a.length() == 0) {
+            return b;
+        }
+        if (b == null || b.length() == 0) {
+            return a;
+        }
+        char[] ca = a.toCharArray();
+        char[] cb = b.toCharArray();
+        char[] temp = new char[Math.max(ca.length, cb.length)];
+        int i = ca.length - 1;
+        int j = cb.length - 1;
+        int k = temp.length - 1;
+        int flag = 0;
+        while (i >= 0 || j >= 0) {
+            int bit;
+            if (i >= 0 && j >= 0) {
+                bit = ca[i] - '0' + cb[j] - '0' + flag;
+            } else if (i < 0) {
+                bit = cb[j] - '0' + flag;
+            } else {
+                bit = ca[i] - '0' + flag;
+            }
+            if (bit > 1) {
+                flag = 1;
+            } else {
+                flag = 0;
+            }
+            switch (bit) {
+                case 0:
+                case 2:
+                    temp[k] = '0';
+                    break;
+                case 1:
+                case 3:
+                    temp[k] = '1';
+                    break;
+                default:
+                    break;
+            }
+            i--;
+            j--;
+            k--;
+        }
+        if (flag == 1) {
+            char[] result = new char[temp.length + 1];
+            System.arraycopy(temp, 0, result, 1, temp.length);
+            result[0] = '1';
+            return String.valueOf(result);
+        }
+        return String.valueOf(temp);
+    }
+
     // 606. Construct String from Binary Tree
     public String tree2str(TreeNode t) {
         String result = "";

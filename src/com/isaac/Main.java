@@ -9,6 +9,8 @@ public class Main {
     public static void main(String[] args) {
 
         SolutionEasy se = new SolutionEasy();
+        se.mySqrt(1);
+        se.addBinary("11", "1");
         se.lengthOfLastWord("Hello World");
         se.selfDividingNumbers(19, 20);
 
