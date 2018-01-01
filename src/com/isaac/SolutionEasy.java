@@ -2,11 +2,64 @@ package com.isaac;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 public class SolutionEasy {
 
+    // 219. Contains Duplicate II
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        if (nums.length < 2) {
+            return false;
+        }
+        Map<Integer, Integer> distinct = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (distinct.containsKey(nums[i])) {
+                if (i - distinct.get(nums[i]) <= k) {
+                    return true;
+                } else {
+                    distinct.put(nums[i], i);
+                }
+            } else {
+                distinct.put(nums[i], i);
+            }
+        }
+        return false;
+    }
+
+    // 217. Contains Duplicate
+    public boolean containsDuplicate(int[] nums) {
+        if (nums.length < 2) {
+            return false;
+        }
+        Set<Integer> distinct = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (distinct.contains(nums[i])) {
+                return true;
+            } else {
+                distinct.add(nums[i]);
+            }
+        }
+        return false;
+    }
+
+    // 747. Min Cost Climbing Stairs
+    public int minCostClimbingStairs(int[] cost) {
+        if (cost.length < 2) {
+            return 0;
+        }
+        int[] minCost = new int[cost.length];
+        minCost[0] = cost[0];
+        minCost[1] = cost[1];
+        for (int i = 2; i < cost.length; i++) {
+            minCost[i] = Math.min(minCost[i - 1], minCost[i - 2]) + cost[i];
+        }
+        return Math.min(minCost[minCost.length - 1], minCost[minCost.length - 2]);
+    }
 
     // 70. Climbing Stairs
     public int climbStairs(int n) {
